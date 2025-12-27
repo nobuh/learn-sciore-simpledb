@@ -9,8 +9,6 @@ https://gist.github.com/ankithooda/b0d624aec9b3ed2882713d59feba4b11.
 build
 -----
 
-based on SimpleDB_3.4.zip from here - http://www.cs.bc.edu/~sciore/simpledb/
-
 Create bin folder to store the compiled .class files
 
 	mkdir -p bin/server
