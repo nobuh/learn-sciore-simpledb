@@ -67,3 +67,8 @@ after providing the connection string, SQL> prompt appears, where one can type i
 	        pat      20
 	        lee      10
 
+How to insert
+-------------
+
+	insert into student (sname, majorid) values ('name', value)
+	-- string value should be enclosed by ' not "
