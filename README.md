@@ -11,6 +11,7 @@ build
 
 Create bin folder to store the compiled .class files
 
+	cd SimpleDB_3.4
 	mkdir -p bin/server
 	mkdir -p bin/client
 
