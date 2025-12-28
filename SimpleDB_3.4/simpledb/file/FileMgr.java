@@ -9,6 +9,9 @@ public class FileMgr {
    private boolean isNew;
    private Map<String,RandomAccessFile> openFiles = new HashMap<>();
 
+   // read write の統計値を保持する
+   private Map<String,Integer> ioCount = new HashMap<>();
+
    public FileMgr(File dbDirectory, int blocksize) {
       this.dbDirectory = dbDirectory;
       this.blocksize = blocksize;
@@ -22,6 +25,10 @@ public class FileMgr {
       for (String filename : dbDirectory.list())
          if (filename.startsWith("temp"))
          		new File(dbDirectory, filename).delete();
+
+      // merge を使えば初期化は必ずしも必要ないが、気持ち悪いのでやる
+      this.ioCount.put("reads", 0);
+      this.ioCount.put("writes", 0);
    }
 
    public synchronized void read(BlockId blk, Page p) {
@@ -33,6 +40,8 @@ public class FileMgr {
       catch (IOException e) {
          throw new RuntimeException("cannot read block " + blk);
       }
+
+      this.ioCount.merge("reads", 1, Integer::sum);
    }
 
    public synchronized void write(BlockId blk, Page p) {
@@ -44,6 +53,8 @@ public class FileMgr {
       catch (IOException e) {
          throw new RuntimeException("cannot write block" + blk);
       }
+
+      this.ioCount.merge("writes", 1, Integer::sum);
    }
 
    public synchronized BlockId append(String filename) {
@@ -87,5 +98,10 @@ public class FileMgr {
          openFiles.put(filename, f);
       }
       return f;
+   }
+
+   // ioCounter の値をメッセージとして返す
+   public String ioStatus() {
+       return String.format("read %s blocks. write %s blocks.", this.ioCount.get("reads"), this.ioCount.get("writes"));
    }
 }
