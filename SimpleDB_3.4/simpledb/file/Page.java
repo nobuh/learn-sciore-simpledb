@@ -21,6 +21,10 @@ public class Page {
       return bb.getInt(offset);
    }
 
+   // 取得済みのブロック bb に収まるかチェックしていないが
+   // bb は blocksize の固定取得だけではなく log のときの参照割当のケースがあること
+   // 取得していない領域への書き込みは java.nio.BufferOverflowException が出て
+   // 保護されるので明示的なサイズの事前チェックが不要
    public void setInt(int offset, int n) {
       bb.putInt(offset, n);
    }
@@ -33,6 +37,10 @@ public class Page {
       return b;
    }
 
+   // 取得済みのブロック bb に収まるかチェックしていないが
+   // bb は blocksize の固定取得だけではなく log のときの参照割当のケースがあること
+   // 取得していない領域への書き込みは java.nio.BufferOverflowException が出て
+   // 保護されるので明示的なサイズの事前チェックが不要
    public void setBytes(int offset, byte[] b) {
       bb.position(offset);
       bb.putInt(b.length);
