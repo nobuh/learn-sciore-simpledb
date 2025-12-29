@@ -72,3 +72,12 @@ How to insert
 
 	insert into student (sname, majorid) values ('name', value)
 	-- string value should be enclosed by ' not "
+
+Test
+----
+
+- FileTest
+
+    javac -d bin/server simpledb/file/FileTest.java
+    cd bin/server
+    java simpledb.file.FileTest
