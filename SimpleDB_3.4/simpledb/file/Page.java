@@ -17,6 +17,14 @@ public class Page {
       bb = ByteBuffer.wrap(b);
    }
 
+   public int getShort(int offset) {
+      return bb.getShort(offset);
+   }
+
+   public void setShort(int offset, short n) {
+      bb.putShort(offset, n);
+   }
+
    public int getInt(int offset) {
       return bb.getInt(offset);
    }

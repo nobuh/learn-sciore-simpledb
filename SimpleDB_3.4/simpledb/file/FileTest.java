@@ -20,6 +20,17 @@ public class FileTest {
       Page p2 = new Page(fm.blockSize());
       fm.read(blk, p2);
       System.out.println("offset " + pos2 + " contains " + p2.getInt(pos2));
-      System.out.println("offset " + pos1 + " contains " + p2.getString(pos1));
+      System.out.println("offset " + pos1 + " contains " + p1.getString(pos1));
+
+      Page p3 = new Page(fm.blockSize());
+      p3.setShort(0, (short)123);
+      p3.setShort(2, (short)456);
+      System.out.println("offset 0 shortint " + p3.getShort(0));
+      System.out.println("offset 2 shortint " + p3.getShort(2));
+
+      
+
+
+
    }
 }
