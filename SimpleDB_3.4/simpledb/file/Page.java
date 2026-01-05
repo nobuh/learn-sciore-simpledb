@@ -17,7 +17,23 @@ public class Page {
       bb = ByteBuffer.wrap(b);
    }
 
-   public int getShort(int offset) {
+   public boolean getBoolean(int offset) {
+      if (bb.get(offset)) {
+          return true;
+      } else {
+          return false;
+      }
+   }
+
+   public void setBoolean(int offset, boolean b) {
+      if (b) {
+          bb.put(offset, 1);
+      } else {
+          bb.put(offset, 0);
+      }
+   }
+
+   public short getShort(int offset) {
       return bb.getShort(offset);
    }
 

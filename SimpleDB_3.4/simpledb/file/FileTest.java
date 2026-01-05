@@ -28,6 +28,12 @@ public class FileTest {
       System.out.println("offset 0 shortint " + p3.getShort(0));
       System.out.println("offset 2 shortint " + p3.getShort(2));
 
+
+      Page p4 = new Page(fm.blockSize());
+      p3.setBoolean(0, true);
+      p3.setBoolean(1, false);
+      System.out.println("offset 0 boolean " + p3.getBoolean(0));
+      System.out.println("offset 1 boolean " + p3.getBoolean(1));
       
 
 
