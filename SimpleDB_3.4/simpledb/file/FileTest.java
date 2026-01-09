@@ -1,6 +1,10 @@
 package simpledb.file;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import simpledb.server.SimpleDB;
 
 public class FileTest {
@@ -35,8 +39,12 @@ public class FileTest {
       System.out.println("offset 0 boolean " + p3.getBoolean(0));
       System.out.println("offset 1 boolean " + p3.getBoolean(1));
       
-
-
-
+      Page p5 = new Page(fm.blockSize());
+      try {
+         p5.setDate(0, new SimpleDateFormat("yyyy/MM/dd").parse("1970/1/1"));         
+      } catch (ParseException e) {
+         e.printStackTrace();
+      }
+      System.out.println("offset 0 Date = " + p5.getDate(0));
    }
 }

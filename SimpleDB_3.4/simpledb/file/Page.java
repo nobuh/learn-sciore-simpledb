@@ -2,6 +2,9 @@ package simpledb.file;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Page {
    private ByteBuffer bb;
@@ -17,8 +20,28 @@ public class Page {
       bb = ByteBuffer.wrap(b);
    }
 
+   // ByteBuffer には Date を扱うメソッドは無いため、String を使って入出力する
+
+   public Date getDate(int offset) {
+      String stringOfDate = this.getString(offset);
+      // parse メソッドは例外を返すことがあるため try catch を用意しないとコンパイルが通らない
+      try {
+         Date date = new SimpleDateFormat("yyyy/MM/dd").parse(stringOfDate);
+         return date;
+      } catch (ParseException e) {
+         e.printStackTrace();
+         return null;
+      }
+   }
+
+   public void setDate(int offset, Date date) {
+      String stringOfDate = new SimpleDateFormat("yyyy/MM/dd").format(date);
+      this.setString(offset, stringOfDate);
+   }
+
    public boolean getBoolean(int offset) {
-      if (bb.get(offset)) {
+      byte b = bb.get(offset);
+      if (b == 1) {
           return true;
       } else {
           return false;
@@ -27,9 +50,9 @@ public class Page {
 
    public void setBoolean(int offset, boolean b) {
       if (b) {
-          bb.put(offset, 1);
+          bb.put(offset, (byte)1);
       } else {
-          bb.put(offset, 0);
+          bb.put(offset, (byte)0);
       }
    }
 
